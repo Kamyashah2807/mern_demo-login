@@ -1,7 +1,5 @@
 const { authJwt } = require("../middlewares");
 const controller = require("../controllers/user.controller");
-const express = require("express");
-const app = express();
 const multer = require('multer');
 const fs = require('fs');
 const path = require("path");
@@ -15,7 +13,7 @@ var upload = multer({
       }
       callback(null, './uploads');
     },
-    filename: function (req, file, callback) { callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)); }
+    filename: function (req, file, callback) { callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname)) }
   }),
 
   fileFilter: function (req, file, callback) {
@@ -28,21 +26,20 @@ var upload = multer({
 });
 
 module.exports = function (app) {
-  // app.use(function (req, res, next) {
-  //   res.header(
-  //     "Access-Control-Allow-Headers",
-  //     "x-access-token, Origin, Content-Type, Accept"
-  //   );
-  //   next();
-  // });
+  app.use(function (req, res, next) {
+    res.header(
+      "Access-Control-Allow-Headers",
+      "x-access-token, Origin, Content-Type, Accept"
+    );
+    next();
+  });
 
   app.get("/api/test/all", controller.allAccess);
 
   app.get("/api/test/user/getissue", controller.getuserBoard);
-
-  app.post("/api/test/user/addissue" ,upload.any(), controller.adduserBoard);
-  app.post("/api/test/user/updateissue",upload.any(), controller.updateuserBoard);
-  app.post("/api/test/user/deleteissue" ,controller.deleteuserBoard);
+  app.post("/api/test/user/addissue", upload.any(), controller.adduserBoard);
+  app.post("/api/test/user/updateissue", upload.any(), controller.updateuserBoard);
+  app.post("/api/test/user/deleteissue",controller.deleteuserBoard);
 
   app.get("/api/test/admin", [authJwt.verifyToken, authJwt.isAdmin], controller.adminBoard);
 };

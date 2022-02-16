@@ -27,10 +27,9 @@ isAdmin = (req, res, next) => {
       return;
     }
 
-    Role.find(
-      {
-        _id: { $in: user.roles }
-      },
+    Role.find({
+      _id: { $in: user.roles }
+    },
       (err, roles) => {
         if (err) {
           res.status(500).send({ message: err });
@@ -55,4 +54,5 @@ const authJwt = {
   verifyToken,
   isAdmin,
 };
+
 module.exports = authJwt;

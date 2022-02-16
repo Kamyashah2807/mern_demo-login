@@ -4,29 +4,29 @@ const Issue = mongoose.model(
   "Issue",
   new mongoose.Schema({
     title: {
-      type:String,
+      type: String,
     },
     description: {
       type: String,
     },
     status: {
-      type:String,
+      type: String,
     },
     image: {
       type: String,
     },
-    is_delete: { 
-      type: Boolean, 
-      default: false 
+    is_delete: {
+      type: Boolean,
+      default: false
     },
-	  date : { 
-      type : Date, 
-      default: Date.now 
+    date: {
+      type: Date,
+      default: Date.now
     },
     user_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
-    }
+      ref: "User",
+    },
   })
 );
 

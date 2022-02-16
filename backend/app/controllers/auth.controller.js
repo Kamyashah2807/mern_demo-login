@@ -1,5 +1,4 @@
 const config = require("../config/auth.config");
-// const nodemailer = require("../config/nodemailer.config");
 
 const db = require("../models");
 const User = db.user;
@@ -9,13 +8,11 @@ var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
 exports.signup = (req, res) => {
-  // const token = jwt.sign({ email: req.body.email }, config.secret);
   if (req.body && req.body.username && req.body.email && req.body.password) {
     const user = new User({
       username: req.body.username,
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 8),
-      // confirmationCode: token,
     });
 
     user.save((err, user) => {
@@ -42,19 +39,8 @@ exports.signup = (req, res) => {
                 return;
               }
               res.send({
-                message:
-                  "User was registered successfully!",
+                message: "User was registered successfully!",
               });
-
-              // res.send({
-              //   message:
-              //     "User was registered successfully! Please check your email",
-              // });
-              // nodemailer.sendConfirmationEmail(
-              //   user.username,
-              //   user.email,
-              //   user.confirmationCode
-              // );
               res.redirect("/");
             });
           });
@@ -75,16 +61,6 @@ exports.signup = (req, res) => {
               message:
                 "User was registered successfully!",
             });
-            // res.send({
-            //   message:
-            //     "User was registered successfully! Please check your email",
-            // });
-
-            // nodemailer.sendConfirmationEmail(
-            //   user.username,
-            //   user.email,
-            //   user.confirmationCode
-            // );
           });
         });
       }
@@ -119,12 +95,6 @@ exports.signin = (req, res) => {
         });
       }
 
-      // if (user.status != "Active") {
-      //   return res.status(401).send({
-      //     message: "Pending Account. Please Verify Your Email!",
-      //   });
-      // }
-
       var token = jwt.sign({ id: user.id }, config.secret, {
         expiresIn: 86400,
       });
@@ -140,27 +110,6 @@ exports.signin = (req, res) => {
         email: user.email,
         roles: authorities,
         accessToken: token,
-        // status: user.status,
       });
     });
 };
-
-// exports.verifyUser = (req, res, next) => {
-//   User.findOne({
-//     confirmationCode: req.params.confirmationCode,
-//   })
-//     .then((user) => {
-//       console.log(user);
-//       if (!user) {
-//         return res.status(404).send({ message: "User Not found." });
-//       }
-//       user.status = "Active";
-//       user.save((err) => {
-//         if (err) {
-//           res.status(500).send({ message: err });
-//           return;
-//         }
-//       });
-//     })
-//     .catch((e) => console.log("error", e));
-// };

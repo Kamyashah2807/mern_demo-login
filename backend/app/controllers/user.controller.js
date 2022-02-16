@@ -1,5 +1,6 @@
 const Issue = require("../models/issue.model");
 const fs = require("fs")
+const User = require("../models/user.model");
 
 exports.allAccess = (req, res) => {
   res.status(200).send("Public Content.");
@@ -48,11 +49,13 @@ exports.getuserBoard = (req, res) => {
 }
 
 exports.adduserBoard = (req, res) => {
+    req.body.user = req.userId
     let new_issue = new Issue();
     new_issue.title = req.body.title;
     new_issue.description = req.body.description;
     new_issue.status = req.body.status;
     new_issue.image = req.files[0].filename;
+    new_issue.user = req.userId;
     new_issue.save((err, data) => {
       if (err) {
         res.status(400).json({

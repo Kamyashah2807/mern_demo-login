@@ -13,7 +13,6 @@ import Profile from "./components/Profile";
 import User from "./components/User";
 import Admin from "./components/Admin";
 
-
 const App = () => {
   const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -24,9 +23,7 @@ const App = () => {
     if (user) {
       setCurrentUser(user);
       setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
-    }
-
-  
+    }  
   }, []);
 
   const logOut = () => {

@@ -28,7 +28,7 @@ export default class User extends Component {
             search: '',
             issues: [],
             pages: 0,
-            loading: false
+            loading: false,
         };
     }
 
@@ -54,7 +54,7 @@ export default class User extends Component {
 
     deleteIssue = (id) => {
         if (window.confirm("Are you sure wanted to delete?")) {
-            axios.post('http://localhost:/5000/api/test/user/deleteissue', {
+            axios.post('http://localhost:5000/api/test/user/deleteissue', {
                 id: id
             }, {
                 headers: {
@@ -87,13 +87,12 @@ export default class User extends Component {
         });
     }
 
-
     onChange = (e) => {
         if (e.target.files && e.target.files[0] && e.target.files[0].name) {
             this.setState({ fileName: e.target.files[0].name }, () => { });
         }
         this.setState({ [e.target.name]: e.target.value }, () => { });
-        if (e.target.name == 'search') {
+        if (e.target.name === 'search') {
             this.setState({ page: 1 }, () => {
                 this.getIssue();
             });
@@ -138,7 +137,6 @@ export default class User extends Component {
             });
             this.handleIssueClose();
         });
-
     }
 
     updateIssue = () => {
@@ -156,7 +154,6 @@ export default class User extends Component {
                 'token': this.state.accessToken
             }
         }).then((res) => {
-
             swal({
                 text: res.data.title,
                 icon: "success",
@@ -175,7 +172,6 @@ export default class User extends Component {
             });
             this.handleIssueEditClose();
         });
-
     }
 
     handleIssueOpen = () => {
@@ -210,7 +206,7 @@ export default class User extends Component {
 
     render() {
         return (
-            <div style={{textAlign:"center"}}>
+            <div style={{ textAlign: "center" }}>
                 {this.state.loading && <LinearProgress size={40} />}
                 <div>
                     <h2>Dashboard</h2>
@@ -291,7 +287,7 @@ export default class User extends Component {
                             Cancel
                         </Button>
                         <Button
-                            disabled={this.state.title == '' || this.state.description == '' || this.state.status == ''}
+                            disabled={this.state.title === '' || this.state.description === '' || this.state.status === ''}
                             onClick={(e) => this.updateIssue()} color="primary" autoFocus>
                             Edit Issue
                         </Button>
@@ -365,7 +361,7 @@ export default class User extends Component {
                             Cancel
                         </Button>
                         <Button
-                            disabled={this.state.title == '' || this.state.description == '' || this.state.status == '' || this.state.file == null}
+                            disabled={this.state.title === '' || this.state.description === '' || this.state.status === '' || this.state.file === null}
                             onClick={(e) => this.addIssue()} color="primary" autoFocus>
                             Add Issue
                         </Button>
@@ -397,7 +393,7 @@ export default class User extends Component {
                         </TableHead>
                         <TableBody>
                             {this.state.issues.map((row) => (
-                                <TableRow key={row.id}>
+                                <TableRow key={row._id}>
                                     <TableCell align="center" component="th" scope="row">
                                         {row.title}
                                     </TableCell>
