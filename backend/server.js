@@ -10,7 +10,7 @@ const app = express();
 const publicPath = path.join(__dirname, '..', 'public');
 
 var corsOptions = {
-  origin: "https://lucid-lovelace-179cb8.netlify.app"
+  origin: "https://jovial-bohr-f0c663.netlify.app"
 };
 
 let URL = process.env.DATABASE

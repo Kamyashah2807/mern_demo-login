@@ -12,8 +12,6 @@ export default class Admin extends Component {
     super();
     this.state = {
       token: '',
-      openIssueModal: false,
-      openIssueEditModal: false,
       id: '',
       title: '',
       description: '',
@@ -92,7 +90,6 @@ export default class Admin extends Component {
                 <TableCell align="center">Image</TableCell>
                 <TableCell align="center">Description</TableCell>
                 <TableCell align="center">Status</TableCell>
-                <TableCell align="center">Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -108,26 +105,6 @@ export default class Admin extends Component {
                     {row.status === "Processing" ? <Badge bg="info">{row.status}</Badge> : null}
                     {row.status === "In Review" ? <Badge bg="warning">{row.status}</Badge> : null}
                     {row.status === "Completed" ? <Badge bg="success">{row.status}</Badge> : null}
-                  </TableCell>
-                  <TableCell align="center">
-                    <Button
-                      className="button_style"
-                      variant="outlined"
-                      color="primary"
-                      size="small"
-                      onClick={(e) => this.handleIssueEditOpen(row)}
-                    >
-                      Edit
-                    </Button> &nbsp;
-                    <Button
-                      className="button_style"
-                      variant="outlined"
-                      color="secondary"
-                      size="small"
-                      onClick={(e) => this.deleteIssue(row._id)}
-                    >
-                      Delete
-                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
