@@ -1,3 +1,3 @@
 module.exports = {
-  secret: "mern_login-reg",
+  secret: "mern_login-register",
 };

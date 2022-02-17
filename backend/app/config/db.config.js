@@ -1,5 +1,5 @@
 module.exports = {
   HOST: "localhost",
   PORT: 27017,
-  DB: "db_login-reg"
+  DB: "mern_login-register"
 };

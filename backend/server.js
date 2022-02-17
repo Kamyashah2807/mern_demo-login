@@ -1,13 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const dbConfig = require("./app/config/db.config");
 const dotenv = require("dotenv");
-const mongoose = require("mongoose");
+const path = require('path');
 
 dotenv.config({ path: "./config.env"})
 
 const app = express();
+const publicPath = path.join(__dirname, '..', 'public');
 
 var corsOptions = {
   origin: "http://localhost:3000"
@@ -19,10 +19,10 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('uploads'));
+app.use(express.static(publicPath));
 
 const db = require("./app/models");
 const Role = db.role;
-
 
 db.mongoose.connect(URL,() => ({
   useNewUrlParser:true,
@@ -34,7 +34,7 @@ db.mongoose.connect(URL,() => ({
 });
 
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to Mern application." });
+  res.sendFile(path.join(publicPath, 'index.html'));
 });
 
 require("./app/routes/auth.routes")(app);
