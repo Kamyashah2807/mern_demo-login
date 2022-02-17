@@ -2,12 +2,18 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const dbConfig = require("./app/config/db.config");
+const dotenv = require("dotenv");
+const mongoose = require("mongoose");
+
+dotenv.config({ path: "./config.env"})
 
 const app = express();
 
 var corsOptions = {
   origin: "http://localhost:3000"
 };
+
+let URL = process.env.DATABASE
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
@@ -17,19 +23,15 @@ app.use(express.static('uploads'));
 const db = require("./app/models");
 const Role = db.role;
 
-db.mongoose
-  .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(() => {
-    console.log("Successfully connect to MongoDB.");
-    initial();
-  })
-  .catch(err => {
-    console.error("Connection error", err);
-    process.exit();
-  });
+
+db.mongoose.connect(URL,() => ({
+  useNewUrlParser:true,
+  useFindAndModify:false
+})).then(() => console.log('DB Connected') , initial())
+
+.catch((err)=>{
+  console.log('connection failed');
+});
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to Mern application." });
