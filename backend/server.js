@@ -3,12 +3,11 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const path = require('path');
-const util = require('util');
-const TextEncoder = new util.TextEncoder();
 
 dotenv.config({ path: "./config.env"})
 
 const app = express();
+
 
 var corsOptions = {
   origin: "https://jovial-bohr-f0c663.netlify.app"
@@ -34,7 +33,7 @@ db.mongoose.connect(URL,() => ({
 });
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(publicPath, 'index.html'));
+ res.send("welcome");
 });
 
 require("./app/routes/auth.routes")(app);
