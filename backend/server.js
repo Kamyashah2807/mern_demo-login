@@ -3,11 +3,12 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const path = require('path');
+const util = require('util');
+const TextEncoder = new util.TextEncoder();
 
 dotenv.config({ path: "./config.env"})
 
 const app = express();
-const publicPath = path.join(__dirname, '..', 'public');
 
 var corsOptions = {
   origin: "https://jovial-bohr-f0c663.netlify.app"
@@ -19,7 +20,6 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('uploads'));
-app.use(express.static(publicPath));
 
 const db = require("./app/models");
 const Role = db.role;
