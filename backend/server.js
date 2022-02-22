@@ -1,16 +1,18 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const dotenv = require("dotenv");
 const dbConfig = require("./app/config/db.config");
 
-dotenv.config({ path: "./config.env"})
+// const dotenv = require("dotenv");
+// // dotenv.config({ path: "./config.env"})
 
 const app = express();
 
 var corsOptions = {
   origin: "https://jovial-bohr-f0c663.netlify.app"
 };
+
+// let URL = process.env.DATABASE
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
