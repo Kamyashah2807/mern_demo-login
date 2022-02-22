@@ -2,18 +2,15 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const dotenv = require("dotenv");
-const path = require('path');
+const dbConfig = require("./app/config/db.config");
 
 dotenv.config({ path: "./config.env"})
 
 const app = express();
 
-
 var corsOptions = {
   origin: "https://jovial-bohr-f0c663.netlify.app"
 };
-
-let URL = process.env.DATABASE
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
@@ -23,17 +20,32 @@ app.use(express.static('uploads'));
 const db = require("./app/models");
 const Role = db.role;
 
-db.mongoose.connect(URL,() => ({
-  useNewUrlParser:true,
-  useFindAndModify:false
-})).then(() => console.log('DB Connected') , initial())
+db.mongoose
+  .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  })
+  .then(() => {
+    console.log("Successfully connect to MongoDB.");
+    initial();
+  })
+  .catch(err => {
+    console.error("Connection error", err);
+    process.exit();
+  });
 
-.catch((err)=>{
-  console.log('connection failed');
-});
+// db.mongoose.connect(URL, {
+//   useNewUrlParser:true,
+//   useFindAndModify:false
+// }).then(() => console.log('DB Connected'), initial())
+
+// .catch((err)=>{
+//   console.log('connection failed');
+//   process.exit()
+// });
 
 app.get("/", (req, res) => {
- res.send("welcome");
+  res.sendFile("Hello");
 });
 
 require("./app/routes/auth.routes")(app);
