@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/auth/";
+const API_URL = "https://warm-inlet-24394.herokuapp.com/api/auth";
 
 const register = (username, email, password) => {
   return axios.post(API_URL + "signup", {
