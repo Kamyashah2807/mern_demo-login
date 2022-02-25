@@ -1,10 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const dbConfig = require("./app/config/db.config");
+// const dbConfig = require("./app/config/db.config");
 
-// const dotenv = require("dotenv");
-// // dotenv.config({ path: "./config.env"})
+const dotenv = require("dotenv");
+dotenv.config({ path: "./config.env" })
 
 const app = express();
 
@@ -12,7 +12,7 @@ var corsOptions = {
   origin: "https://jovial-bohr-f0c663.netlify.app"
 };
 
-// let URL = process.env.DATABASE
+let URL = process.env.DATABASE
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
@@ -22,32 +22,32 @@ app.use(express.static('uploads'));
 const db = require("./app/models");
 const Role = db.role;
 
-db.mongoose
-  .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(() => {
-    console.log("Successfully connect to MongoDB.");
-    initial();
-  })
-  .catch(err => {
-    console.error("Connection error", err);
-    process.exit();
+// db.mongoose
+//   .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true
+//   })
+//   .then(() => {
+//     console.log("Successfully connect to MongoDB.");
+//     initial();
+//   })
+//   .catch(err => {
+//     console.error("Connection error", err);
+//     process.exit();
+//   });
+
+db.mongoose.connect(URL, () => ({
+  useNewUrlParser: true,
+  useFindAndModify: false
+}))
+  .then(() => console.log('DB Connected'), initial())
+  .catch((err) => {
+    console.log('connection failed');
   });
 
-// db.mongoose.connect(URL, {
-//   useNewUrlParser:true,
-//   useFindAndModify:false
-// }).then(() => console.log('DB Connected'), initial())
-
-// .catch((err)=>{
-//   console.log('connection failed');
-//   process.exit()
-// });
 
 app.get("/", (req, res) => {
-  res.sendFile("Hello");
+  res.status(200).send("Welcome to Mern Issue Tracker Application");
 });
 
 require("./app/routes/auth.routes")(app);

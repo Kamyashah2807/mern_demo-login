@@ -39,7 +39,7 @@ export default class User extends Component {
         if (this.state.search) {
             data = `${data}&search=${this.state.search}`;
         }
-        axios.get(`http://localhost:5000/api/test/user/getissue${data}`)
+        axios.get(`https://agile-chamber-95113.herokuapp.com/api/test/user/getissue${data}`)
             .then((res) => {
                 this.setState({ loading: false, issues: res.data.issues, pages: res.data.pages });
             }).catch((err) => {
@@ -54,7 +54,7 @@ export default class User extends Component {
 
     deleteIssue = (id) => {
         if (window.confirm("Are you sure wanted to delete?")) {
-            axios.post('http://localhost:5000/api/test/user/deleteissue', {
+            axios.post('https://agile-chamber-95113.herokuapp.com/api/test/user/deleteissue', {
                 id: id
             }, {
                 headers: {
@@ -112,7 +112,7 @@ export default class User extends Component {
         file.append('description', this.state.description);
         file.append('status', this.state.status);
 
-        axios.post('http://localhost:5000/api/test/user/addissue', file, {
+        axios.post('https://agile-chamber-95113.herokuapp.com/api/test/user/addissue', file, {
             headers: {
                 'content-type': 'multipart/form-data',
                 'token': this.state.token
@@ -148,7 +148,7 @@ export default class User extends Component {
         file.append('description', this.state.description);
         file.append('status', this.state.status);
 
-        axios.post('http://localhost:5000/api/test/user/updateissue', file, {
+        axios.post('https://agile-chamber-95113.herokuapp.com/api/test/user/updateissue', file, {
             headers: {
                 'content-type': 'multipart/form-data',
                 'token': this.state.accessToken
@@ -397,7 +397,7 @@ export default class User extends Component {
                                     <TableCell align="center" component="th" scope="row">
                                         {row.title}
                                     </TableCell>
-                                    <TableCell align="center"><img src={`http://localhost:5000/${row.image}`} width="70" height="70" /></TableCell>
+                                    <TableCell align="center"><img src={`https://agile-chamber-95113.herokuapp.com/${row.image}`} width="70" height="70" /></TableCell>
                                     <TableCell align="center"><div dangerouslySetInnerHTML={{ __html: row.description }} /></TableCell>
                                     <TableCell align="center">
                                         {row.status === "Open" ? <Badge bg="primary">{row.status}</Badge> : null}
