@@ -2,6 +2,8 @@ import React, { useState, useRef } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
+import { useNavigate } from 'react-router-dom'
+
 import { isEmail } from "validator";
 
 import AuthService from "../services/auth.service";
@@ -46,9 +48,10 @@ const vpassword = (value) => {
     }
 };
 
-const Register = (props) => {
+const Register = () => {
     const form = useRef();
     const checkBtn = useRef();
+    let history = useNavigate()
 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -82,8 +85,8 @@ const Register = (props) => {
         if (checkBtn.current.context._errors.length === 0) {
             AuthService.register(username, email, password).then(
                 (response) => {
-                    setMessage(response.data.message);
-                    setSuccessful(true);
+                    history("/login")
+                   
                 },
                 (error) => {
                     const resMessage =

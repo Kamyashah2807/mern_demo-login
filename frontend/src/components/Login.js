@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import AuthService from "../services/auth.service";
 
 const required = (value) => {
@@ -16,7 +16,7 @@ const required = (value) => {
 };
 
 const Login = (props) => {
-    let history = useNavigate()
+  let history = useNavigate()
   const form = useRef();
   const checkBtn = useRef();
 
@@ -107,7 +107,7 @@ const Login = (props) => {
               {loading && (
                 <span className="spinner-border spinner-border-sm"></span>
               )}
-              <span>Sign in</span> 
+              <span>Sign in</span>
             </button>
           </div>
 
